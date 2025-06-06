@@ -52,7 +52,7 @@ class CLIEngine {
   /**
    * Cached debug logs
    */
-  debugLogs: string[] = [];
+  private debugLogs: string[] = [];
 
   /**
    * Detect whether the process is a bundled electron app
@@ -62,7 +62,7 @@ class CLIEngine {
   }
 
   /**
-   * entry point of the CLI engine
+   * Entry point of the CLI engine
    */
   async start(rootCmd: CLICommand): Promise<void> {
     Correlator.setId();
@@ -105,14 +105,13 @@ class CLIEngine {
       await this.processResult(context);
     }
     if (context.command.name !== "preview" || context.globalOptionValues.help) {
-      // TODO: consider to remove the hardcode
       await CliTelemetry.flush();
       process.exit();
     }
   }
 
   isTelemetryEnabled(context?: CLIContext) {
-    return context?.globalOptionValues.telemetry === false ? false : true;
+    return context?.globalOptionValues.telemetry !== false;
   }
 
   async execute(
@@ -485,7 +484,7 @@ class CLIEngine {
     }
     this.debugLogs = [];
 
-    // disable telemetry of turned off
+    // Disable telemetry if turned off
     const telemetryEnabled = this.isTelemetryEnabled(context);
     CliTelemetry.enable = telemetryEnabled;
 
