@@ -50,17 +50,15 @@ import { helper } from "./helper";
 
 class CLIEngine {
   /**
-   * @description cached debug logsd
+   * Cached debug logs
    */
   debugLogs: string[] = [];
 
   /**
-   * detect whether the process is a bundled electrop app
+   * Detect whether the process is a bundled electron app
    */
   isBundledElectronApp(): boolean {
-    return process.versions && process.versions.electron && !(process as any).defaultApp
-      ? true
-      : false;
+    return !!(process.versions?.electron && !(process as any).defaultApp);
   }
 
   /**

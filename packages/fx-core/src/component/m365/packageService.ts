@@ -143,7 +143,7 @@ export class PackageService {
           }
         } while (true);
       } else {
-        throw new Error(`Unknown response code: ${uploadResponse.status}}`);
+        throw new Error(`Unknown response code: ${uploadResponse.status}`);
       }
     } catch (error: any) {
       // this.logger?.error("Sideloading failed.");
