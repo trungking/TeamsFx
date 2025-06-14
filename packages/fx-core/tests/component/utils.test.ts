@@ -171,6 +171,24 @@ describe("expandEnvironmentVariable", () => {
     const result = expandEnvironmentVariable(template, { APP_NAME_SUFFIX: "abc" });
     expect(result).to.equal("myappabc");
   });
+
+  it("should expand environment variable with empty string value", () => {
+    const template = "ENV_A value:${{ENV_A}}";
+    envRestore = mockedEnv({
+      ENV_A: "",
+    });
+    const result = expandEnvironmentVariable(template);
+    expect(result).to.equal("ENV_A value:");
+  });
+
+  it("should expand environment variable with zero value", () => {
+    const template = "ENV_A value:${{ENV_A}}";
+    envRestore = mockedEnv({
+      ENV_A: "0",
+    });
+    const result = expandEnvironmentVariable(template);
+    expect(result).to.equal("ENV_A value:0");
+  });
 });
 
 describe("TeamsFxTelemetryReporter", () => {
