@@ -45,14 +45,14 @@ export class DefaultConversationReferenceStore implements ConversationReferenceS
       return false;
     }
 
-    if (await this.storeFileExists()) {
-      const data = await this.readFromFile();
-      if (data[key] !== undefined) {
-        delete data[key];
-        await this.writeToFile(data);
-      }
+    const data = await this.readFromFile();
+    if (data[key] !== undefined) {
+      delete data[key];
+      await this.writeToFile(data);
+      return true;
     }
-    return true;
+
+    return false;
   }
 
   public async list(
