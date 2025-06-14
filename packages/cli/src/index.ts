@@ -14,7 +14,9 @@ import { TelemetryProperty } from "./telemetry/cliTelemetryEvents";
 import { logger } from "./commonlib/logger";
 
 export function initTelemetryReporter(): void {
-  const cliPackage = JSON.parse(fs.readFileSync(path.join(__dirname, "/../package.json"), "utf8"));
+  const cliPackage = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")
+  );
   const reporter = new CliTelemetryReporter(
     cliPackage.aiKey,
     constants.cliTelemetryPrefix,
