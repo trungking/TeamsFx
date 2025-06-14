@@ -87,7 +87,7 @@ export async function convertUIConfigToJson<T extends string | string[] | boolea
   }
   if ("onDidChangeSelection" in config && (config as MultiSelectConfig).onDidChangeSelection) {
     const funcId = setFunc((config as MultiSelectConfig).onDidChangeSelection!);
-    (newConfig as any).validation = <CustomizeFuncRequestType>{
+    (newConfig as any).onDidChangeSelection = <CustomizeFuncRequestType>{
       type: "OnSelectionChangeFunc",
       id: funcId,
     };
