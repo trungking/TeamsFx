@@ -433,7 +433,7 @@ export class ManifestUpdater {
               },
             };
           } else if (Utils.isOAuthWithAuthCodeFlow(auth)) {
-            // TODO: below schema is coming from design doc, may need to update when shcema is finalized
+            // TODO: below schema is coming from design doc, may need to update when schema is finalized
             (composeExtension as any).authorization = {
               authType: "oAuth2.0",
               oAuthConfiguration: {
