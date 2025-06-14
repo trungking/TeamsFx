@@ -18,9 +18,10 @@ export function initTelemetryReporter(): void {
   const reporter = new CliTelemetryReporter(
     cliPackage.aiKey,
     constants.cliTelemetryPrefix,
-    cliPackage.version
+    cliPackage.version,
   );
   cliTelemetry.reporter = reporter;
+  logger.debug(`Telemetry reporter initialized. Version: ${cliPackage.version}`);
 }
 
 /**
@@ -29,11 +30,13 @@ export function initTelemetryReporter(): void {
 export async function start(): Promise<void> {
   initTelemetryReporter();
   const binName = process.env.TEAMSFX_CLI_BIN_NAME as string;
+  logger.debug(`Starting CLI with bin name: ${binName}, node version: ${process.version}`);
   if (binName === "teamsapp") {
     logger.warning(
-      `Deprecation Warning: The CLI command "teamsapp" is renamed to "atk". The old command name will be retired soon. Please switch to the new command and update your workflows accordingly.`
+      `Deprecation Warning: The CLI command "teamsapp" is renamed to "atk". The old command name will be retired soon. Please switch to the new command and update your workflows accordingly.`,
     );
   }
   cliTelemetry.reporter?.addSharedProperty(TelemetryProperty.BinName, binName); // trigger binary name for telemetry
-  return startNewUX(binName);
+  await startNewUX(binName);
+  logger.debug("CLI process finished");
 }
