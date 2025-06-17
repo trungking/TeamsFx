@@ -203,8 +203,9 @@ export class Task {
 
   public async terminate(): Promise<void> {
     return new Promise((resolve) => {
-      if (this.task?.exitCode) {
+      if (this.task?.exitCode !== undefined && this.task?.exitCode !== null) {
         resolve();
+        return;
       }
       const pid = this.task?.pid;
       if (pid === undefined) {
