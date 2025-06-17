@@ -48,7 +48,7 @@ describe("SPFxGenerator", function () {
     sinon
       .stub(fs, "readFile")
       .resolves(
-        new Buffer(
+        Buffer.from(
           `{"id": "${manifestId}", "preconfiguredEntries": [{"title": {"default": "helloworld"}}]}`
         )
       );

@@ -61,7 +61,7 @@ describe("OfficeAddinGenerator for Outlook Addin", function () {
     sinon.stub(fs, "stat").resolves();
     sinon.stub(cpUtils, "executeCommand").resolves("succeed");
     const manifestId = uuid.v4();
-    sinon.stub(fs, "readFile").resolves(new Buffer(`{"id": "${manifestId}"}`));
+    sinon.stub(fs, "readFile").resolves(Buffer.from(`{"id": "${manifestId}"}`));
     sinon.stub(fs, "writeFile").resolves();
     sinon.stub(fs, "rename").resolves();
     sinon.stub(fs, "copyFile").resolves();
@@ -417,7 +417,7 @@ describe("OfficeAddinGenerator for Office Addin", function () {
     sinon.stub(fs, "stat").resolves();
     sinon.stub(cpUtils, "executeCommand").resolves("succeed");
     const manifestId = uuid.v4();
-    sinon.stub(fs, "readFile").resolves(new Buffer(`{"id": "${manifestId}"}`));
+    sinon.stub(fs, "readFile").resolves(Buffer.from(`{"id": "${manifestId}"}`));
     sinon.stub(fs, "writeFile").resolves();
     sinon.stub(fs, "rename").resolves();
     sinon.stub(fs, "copyFile").resolves();
