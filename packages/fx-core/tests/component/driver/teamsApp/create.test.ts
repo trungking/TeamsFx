@@ -68,8 +68,8 @@ describe("teamsApp/create", async () => {
     sinon.stub(fs, "readFile").callsFake(async () => {
       const zip = new AdmZip();
       zip.addFile(Constants.MANIFEST_FILE, Buffer.from(JSON.stringify(new TeamsAppManifest())));
-      zip.addFile("color.png", new Buffer(""));
-      zip.addFile("outlie.png", new Buffer(""));
+      zip.addFile("color.png", Buffer.from(""));
+      zip.addFile("outline.png", Buffer.from(""));
 
       const archivedFile = zip.toBuffer();
       return archivedFile;

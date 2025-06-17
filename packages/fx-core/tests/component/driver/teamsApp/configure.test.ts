@@ -57,8 +57,8 @@ describe("teamsApp/update", async () => {
     sinon.stub(fs, "pathExists").resolves(true);
     sinon.stub(fs, "readFile").callsFake(async () => {
       const zip = new AdmZip();
-      zip.addFile("color.png", new Buffer(""));
-      zip.addFile("outlie.png", new Buffer(""));
+      zip.addFile("color.png", Buffer.from(""));
+      zip.addFile("outline.png", Buffer.from(""));
 
       const archivedFile = zip.toBuffer();
       return archivedFile;
@@ -95,8 +95,8 @@ describe("teamsApp/update", async () => {
       const zip = new AdmZip();
       const manifest = new TeamsAppManifest();
       zip.addFile(Constants.MANIFEST_FILE, Buffer.from(JSON.stringify(manifest)));
-      zip.addFile("color.png", new Buffer(""));
-      zip.addFile("outlie.png", new Buffer(""));
+      zip.addFile("color.png", Buffer.from(""));
+      zip.addFile("outline.png", Buffer.from(""));
 
       const archivedFile = zip.toBuffer();
       return archivedFile;
@@ -136,8 +136,8 @@ describe("teamsApp/update", async () => {
         },
       ];
       zip.addFile(Constants.MANIFEST_FILE, Buffer.from(JSON.stringify(manifest)));
-      zip.addFile("color.png", new Buffer(""));
-      zip.addFile("outlie.png", new Buffer(""));
+      zip.addFile("color.png", Buffer.from(""));
+      zip.addFile("outline.png", Buffer.from(""));
 
       const archivedFile = zip.toBuffer();
       return archivedFile;
@@ -175,8 +175,8 @@ describe("teamsApp/update", async () => {
         },
       ];
       zip.addFile(Constants.MANIFEST_FILE, Buffer.from(JSON.stringify(manifest)));
-      zip.addFile("color.png", new Buffer(""));
-      zip.addFile("outlie.png", new Buffer(""));
+      zip.addFile("color.png", Buffer.from(""));
+      zip.addFile("outline.png", Buffer.from(""));
 
       const archivedFile = zip.toBuffer();
       return archivedFile;
@@ -200,8 +200,8 @@ describe("teamsApp/update", async () => {
       const manifest = new TeamsAppManifest();
       manifest.id = uuid();
       zip.addFile(Constants.MANIFEST_FILE, Buffer.from(JSON.stringify(manifest)));
-      zip.addFile("color.png", new Buffer(""));
-      zip.addFile("outlie.png", new Buffer(""));
+      zip.addFile("color.png", Buffer.from(""));
+      zip.addFile("outline.png", Buffer.from(""));
 
       const archivedFile = zip.toBuffer();
       return archivedFile;
