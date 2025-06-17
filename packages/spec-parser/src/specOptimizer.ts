@@ -3,6 +3,7 @@
 "use strict";
 
 import { OpenAPIV3 } from "openapi-types";
+import { deepClone } from "./utils";
 
 export interface OptimizerOptions {
   removeUnusedComponents: boolean;
@@ -25,7 +26,7 @@ export class SpecOptimizer {
       ...(options ?? {}),
     } as Required<OptimizerOptions>;
 
-    const newSpec = JSON.parse(JSON.stringify(spec));
+    const newSpec = deepClone(spec);
 
     if (mergedOptions.removeUserDefinedRootProperty) {
       SpecOptimizer.removeUserDefinedRootProperty(newSpec);

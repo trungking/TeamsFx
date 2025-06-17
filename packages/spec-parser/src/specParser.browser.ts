@@ -18,7 +18,7 @@ import {
   WarningResult,
 } from "./interfaces";
 import { SpecParserError } from "./specParserError";
-import { Utils } from "./utils";
+import { Utils, deepClone } from "./utils";
 import { ConstantString } from "./constants";
 import { ValidatorFactory } from "./validators/validatorFactory";
 import { Validator } from "./validators/validator";
@@ -242,7 +242,7 @@ export class SpecParser {
         this.isSwaggerFile = true;
       }
 
-      const clonedUnResolveSpec = JSON.parse(JSON.stringify(this.unResolveSpec));
+      const clonedUnResolveSpec = deepClone(this.unResolveSpec);
       this.spec = (await this.parser.dereference(clonedUnResolveSpec)) as OpenAPIV3.Document;
     }
   }
