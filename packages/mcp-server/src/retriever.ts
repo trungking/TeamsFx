@@ -3,6 +3,15 @@
 
 import { z } from "zod";
 
+// Ensure global fetch is available on Node < 18
+if (typeof fetch === "undefined") {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const nodeFetch = require("node-fetch");
+  const fetchFn = (nodeFetch.default ?? nodeFetch) as typeof fetch;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  global.fetch = ((...args: any[]) => fetchFn(...args)) as any;
+}
+
 export const ResourceTypeEnum = z.enum(["documents", "samples", "issues", "code"]);
 export type ResourceType = z.infer<typeof ResourceTypeEnum>;
 
