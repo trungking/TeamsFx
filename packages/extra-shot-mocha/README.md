@@ -24,7 +24,7 @@ import it from "@microsoft/extra-shot-mocha";
 import { describe } from "mocha";
 import { expect } from "chai";
 
-describe("extra shot mocha it tests", async () => {
+describe("extra shot mocha it tests", () => {
   it("should run as normal mocha.it with sync arrow function", () => {
     expect(1).equals(1);
   });

@@ -5,7 +5,7 @@ import { describe } from "mocha";
 import { expect } from "chai";
 import { it } from "../src/it";
 
-describe("Advanced it tests", async () => {
+describe("Advanced it tests", () => {
   it("should run with only title");
 
   it("should run as normal mocha.it with sync function", function () {
