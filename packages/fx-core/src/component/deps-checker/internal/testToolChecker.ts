@@ -240,7 +240,7 @@ export class TestToolChecker implements DepsChecker {
           // do update if npm returned invalid result
           return true;
         }
-        return versionList.filter((v) => semver.gt(v, latestInstalledVersion)).length > 0;
+        return versionList.some((v) => semver.gt(v, latestInstalledVersion));
       } catch {
         // just a best effort optimization to save one download if no recent version has been released
         // do update if check failed
@@ -250,7 +250,7 @@ export class TestToolChecker implements DepsChecker {
       // get version list
       const releases = await GitHubHelpers.listGitHubReleases();
       const versionList = releases.map((release) => release.version);
-      return versionList.filter((v) => semver.gt(v, latestInstalledVersion)).length > 0;
+      return versionList.some((v) => semver.gt(v, latestInstalledVersion));
     }
   }
 

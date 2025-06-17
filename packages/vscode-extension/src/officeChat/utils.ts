@@ -110,12 +110,8 @@ async function isContentHarmful(
     }
     return Number.parseInt(isHarmfulResponse) > 15; // This is a number we have to tune.
   }
-  const promises = Array(1)
-    .fill(null)
-    .map(() => getIsHarmfulResponseAsync());
-  const results = await Promise.all(promises);
-  const isHarmful = results.filter((result) => result === true).length > 0;
-  return isHarmful;
+  const result = await getIsHarmfulResponseAsync();
+  return result === true;
 }
 
 export async function getOfficeSample(sampleId: string): Promise<SampleConfig> {
