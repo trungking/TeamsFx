@@ -232,3 +232,18 @@ export interface ClientCertificate {
   thumbprintSha256: string;
   privateKey: string;
 }
+
+/**
+ * Deep clone helper to copy complex objects.
+ * It uses the built-in structuredClone when available
+ * and falls back to JSON serialization otherwise.
+ *
+ * @internal
+ */
+export function deepClone<T>(obj: T): T {
+  const globalAny: any = globalThis as any;
+  if (typeof globalAny.structuredClone === "function") {
+    return globalAny.structuredClone(obj);
+  }
+  return JSON.parse(JSON.stringify(obj));
+}

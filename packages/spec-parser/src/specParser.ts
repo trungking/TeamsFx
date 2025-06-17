@@ -27,7 +27,7 @@ import {
 import { ConstantString } from "./constants";
 import { SpecParserError } from "./specParserError";
 import { SpecFilter } from "./specFilter";
-import { Utils } from "./utils";
+import { Utils, deepClone } from "./utils";
 import { ManifestUpdater } from "./manifestUpdater";
 import { AdaptiveCardGenerator } from "./adaptiveCardGenerator";
 import { wrapAdaptiveCard, wrapResponseSemantics } from "./adaptiveCardWrapper";
@@ -324,7 +324,7 @@ export class SpecParser {
         throw new SpecParserError(ConstantString.CancelledMessage, ErrorType.Cancelled);
       }
 
-      const clonedUnResolveSpec = JSON.parse(JSON.stringify(newUnResolvedSpec));
+      const clonedUnResolveSpec = deepClone(newUnResolvedSpec);
       const newSpec = await this.deReferenceSpec(clonedUnResolveSpec);
       return [newUnResolvedSpec, newSpec];
     } catch (err) {
@@ -662,7 +662,7 @@ export class SpecParser {
         this.isSwaggerFile = true;
       }
 
-      const clonedUnResolveSpec = JSON.parse(JSON.stringify(this.unResolveSpec));
+      const clonedUnResolveSpec = deepClone(this.unResolveSpec);
 
       this.spec = await this.deReferenceSpec(clonedUnResolveSpec);
     }

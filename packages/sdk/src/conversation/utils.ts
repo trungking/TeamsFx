@@ -4,6 +4,7 @@
 import { TurnContext } from "@microsoft/agents-hosting";
 import { ConversationReference } from "@microsoft/agents-activity";
 import { NotificationTargetType } from "./interface";
+import { deepClone } from "../util/utils";
 
 /**
  * @internal
@@ -11,7 +12,7 @@ import { NotificationTargetType } from "./interface";
 export function cloneConversation(
   conversation: Partial<ConversationReference>
 ): ConversationReference {
-  return JSON.parse(JSON.stringify(conversation));
+  return deepClone(conversation);
 }
 
 /**

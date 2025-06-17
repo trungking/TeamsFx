@@ -549,3 +549,11 @@ export class Utils {
     }
   }
 }
+
+export function deepClone<T>(obj: T): T {
+  const globalAny: any = globalThis as any;
+  if (typeof globalAny.structuredClone === "function") {
+    return globalAny.structuredClone(obj);
+  }
+  return JSON.parse(JSON.stringify(obj));
+}

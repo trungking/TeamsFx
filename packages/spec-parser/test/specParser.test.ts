@@ -21,7 +21,7 @@ import { OpenAPI, OpenAPIV3 } from "openapi-types";
 import { SpecFilter } from "../src/specFilter";
 import { ManifestUpdater } from "../src/manifestUpdater";
 import { AdaptiveCardGenerator } from "../src/adaptiveCardGenerator";
-import { Utils } from "../src/utils";
+import { Utils, deepClone } from "../src/utils";
 import jsyaml from "js-yaml";
 import mockedEnv, { RestoreFn } from "mocked-env";
 import { SMEValidator } from "../src/validators/smeValidator";
@@ -2484,7 +2484,7 @@ describe("SpecParser", () => {
         },
       };
       const parseStub = sinon.stub(specParser.parser, "parse").resolves(spec as any);
-      const cloneSpec = JSON.parse(JSON.stringify(spec));
+      const cloneSpec = deepClone(spec);
       cloneSpec.paths["/hello"].get.operationId = "getHello";
       const dereferenceStub = sinon
         .stub(specParser.parser, "dereference")
