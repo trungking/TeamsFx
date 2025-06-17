@@ -7,13 +7,17 @@ import { traceId } from "../tracing";
 import { appendOutput, appendOutputSync } from "../writer";
 
 /**
- * TODO: allow cutomization
- * all in millsecond
+ * Thresholds for categorizing the duration of a call.
+ * Values are in milliseconds.
  */
-const fast = 1;
-const normal = 20;
+const DEFAULT_FAST = 1;
+const DEFAULT_NORMAL = 20;
 
-export const MSTimer = (fn: string) => {
+export interface TimerOptions {
+  fast?: number;
+  normal?: number;
+}
+export const MSTimer = (fn: string, options: TimerOptions = {}) => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
@@ -29,6 +33,9 @@ export const MSTimer = (fn: string) => {
       method: originalMethod.name,
       timestamp: Date.now(),
     };
+
+    const fast = options.fast ?? DEFAULT_FAST;
+    const normal = options.normal ?? DEFAULT_NORMAL;
 
     if (originalMethod.constructor.name === "AsyncFunction") {
       descriptor.value = async function (...args: any[]) {
