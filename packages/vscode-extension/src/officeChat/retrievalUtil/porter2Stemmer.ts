@@ -121,15 +121,17 @@ function isShort(word: string): boolean {
 }
 
 export function stemmer(value: string): string {
+  // Normalize case first
+  value = value.toLowerCase();
+
   // check if the word is a special word
   if (value in ruleSpecialWords) {
     return ruleSpecialWords[value];
   }
 
   //If the word has two letters or less, leave it as it is.
-  const word = value.toLowerCase();
-  if (word.length < 3) {
-    return word;
+  if (value.length < 3) {
+    return value;
   }
 
   //Remove initial '
