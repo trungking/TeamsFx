@@ -299,12 +299,7 @@ export class BotSsoExecutionDialog extends ComponentDialog {
   private isPatternMatched(patterns: TriggerPatterns, text: string): boolean {
     const expressions = Array.isArray(patterns) ? patterns : [patterns];
 
-    for (const ex of expressions) {
-      const matches = this.matchPattern(ex, text);
-      return !!matches;
-    }
-
-    return false;
+    return expressions.some((ex) => !!this.matchPattern(ex, text));
   }
 
   private getMatchesCommandId(text: string): string | undefined {
