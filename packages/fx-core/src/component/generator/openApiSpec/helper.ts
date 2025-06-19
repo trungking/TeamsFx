@@ -1719,9 +1719,12 @@ export async function generateAdaptiveCardInPluginManifestForKiota(
   context: Context
 ): Promise<void> {
   try {
-    const operation = (await listAPIInfo(specPath)).APIs.filter((value) => value.isValid).map(
-      (value) => value.api
-    );
+    const operation = (await listAPIInfo(specPath)).APIs.reduce<string[]>((acc, value) => {
+      if (value.isValid) {
+        acc.push(value.api);
+      }
+      return acc;
+    }, []);
 
     const specParser = new SpecParser(specPath, getParserOptions(ProjectType.Copilot, true));
     await specParser.generateAdaptiveCardInPlugin(pluginManifestPath, operation, undefined);
