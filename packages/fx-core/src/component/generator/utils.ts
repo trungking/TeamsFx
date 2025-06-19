@@ -300,21 +300,20 @@ export async function runWithLimitedConcurrency<T>(
   callback: (arg: T) => any,
   concurrencyLimit: number
 ): Promise<void> {
-  const queue: any[] = [];
+  const queue: Set<Promise<any>> = new Set();
   for (const item of items) {
     // fire the async function, add its promise to the queue, and remove
     // it from queue when complete
     const p = callback(item)
-      .then((res: any) => {
-        queue.splice(queue.indexOf(p), 1);
-        return res;
+      .finally(() => {
+        queue.delete(p);
       })
       .catch((err: any) => {
         throw err;
       });
-    queue.push(p);
+    queue.add(p);
     // if max concurrent, wait for one to finish
-    if (queue.length >= concurrencyLimit) {
+    if (queue.size >= concurrencyLimit) {
       await Promise.race(queue);
     }
   }

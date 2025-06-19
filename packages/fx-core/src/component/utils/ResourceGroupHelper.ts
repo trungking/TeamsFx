@@ -101,11 +101,12 @@ export function selectResourceGroupLocationQuestion(
       if (getLocationsRes.isErr()) {
         throw getLocationsRes.error;
       }
+      const recommendedSet = new Set(recommendedLocations);
       const recommended = getLocationsRes.value.filter((location) => {
-        return recommendedLocations.indexOf(location) >= 0;
+        return recommendedSet.has(location);
       });
       const others = getLocationsRes.value.filter((location) => {
-        return recommendedLocations.indexOf(location) < 0;
+        return !recommendedSet.has(location);
       });
       return [
         ...recommended.map((location) => {

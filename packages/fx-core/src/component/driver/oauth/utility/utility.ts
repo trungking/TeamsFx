@@ -83,13 +83,13 @@ async function getandValidateOauthInfoFromSpec(
     throw new OauthAuthMissingInSpec(actionName, args.name);
   }
 
-  const domains = operations
-    .map((value) => {
-      return value.server;
-    })
-    .filter((value, index, self) => {
-      return self.indexOf(value) === index;
-    });
+  const domains = Array.from(
+    new Set(
+      operations.map((value) => {
+        return value.server;
+      })
+    )
+  );
   validateDomain(domains, actionName);
 
   // Need to separate the logic for different flows
