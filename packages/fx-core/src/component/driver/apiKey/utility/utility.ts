@@ -53,9 +53,7 @@ export async function getDomain(
   context.addTelemetryProperties({ [telemetryKeys.isCustomAPIKey]: isCustomAPIKey });
 
   const servers = filteredOperations.map((value) => value.server);
-
-  const uniqueServerUrls = servers.filter((value, index, self) => self.indexOf(value) === index);
-
+  const uniqueServerUrls = Array.from(new Set(servers));
   return uniqueServerUrls;
 }
 
