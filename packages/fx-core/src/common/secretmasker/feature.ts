@@ -4,38 +4,32 @@
 import { dictMatcher } from "./dict";
 
 export function combinations1(keys: string[]): string[] {
-  const expandedKeys: string[] = [];
-  keys.forEach((key) => {
+  const resultSet = new Set<string>();
+  for (const key of keys) {
     if (key.endsWith("password")) {
-      expandedKeys.push(key.substring(0, key.length - 4));
+      resultSet.add(key.substring(0, key.length - 4));
     }
-    expandedKeys.push(key);
-  });
 
-  keys = expandedKeys;
+    resultSet.add(key);
 
-  let results: string[] = [];
-  results = results.concat(keys);
-
-  keys.forEach((key) => {
     if (key.includes("_")) {
-      const key1 = key.split("_").join("");
-      const key2 = key.split("_").join("-");
-      results.push(key1);
-      results.push(key2);
+      resultSet.add(key.split("_").join(""));
+      resultSet.add(key.split("_").join("-"));
     }
-  });
-  return Array.from(new Set(results)).sort();
+  }
+
+  return Array.from(resultSet).sort();
 }
 
 export function combinations2(keys: string[]): string[] {
-  let results: string[] = [];
-  results = results.concat(keys);
-  keys.forEach((key) => {
-    results.push("-" + key);
-    results.push("--" + key);
-  });
-  return Array.from(new Set(results)).sort();
+  const resultSet = new Set<string>();
+  for (const key of keys) {
+    resultSet.add(key);
+    resultSet.add(`-${key}`);
+    resultSet.add(`--${key}`);
+  }
+
+  return Array.from(resultSet).sort();
 }
 
 export const CredKeywordsEndsWith: string[] = combinations1([
