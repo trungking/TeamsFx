@@ -29,7 +29,7 @@ import { commands } from "../../resource";
 import { shareCommand } from "./share";
 import { setCommand } from "./set";
 import { featureFlagManager, FeatureFlags } from "@microsoft/teamsfx-core";
-import { regenerateCommand } from "./regnereate";
+import { regenerateCommand } from "./regenerate";
 
 export const helpCommand: CLICommand = {
   name: "help",

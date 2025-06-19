@@ -12,7 +12,7 @@ export const regeneratePluginCommand: CLICommand = {
   description: commands["regenerate.action"].description,
   options: [...RegeneratePluginOptions, ProjectFolderOption],
   telemetry: {
-    event: TelemetryEvent.RegneratePlugin,
+    event: TelemetryEvent.RegeneratePlugin,
   },
   handler: async (ctx) => {
     const inputs = ctx.optionValues as RegeneratePluginInputs;
