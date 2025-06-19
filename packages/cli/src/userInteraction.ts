@@ -647,6 +647,10 @@ class CLIUserInteraction implements UserInteraction {
         timeout: args.timeout,
         env: args.env,
       });
+      childProcess.on("error", (error) => {
+        logger.error(`Execute task failed: ${error.message}`);
+        resolve(err(new ScriptExecutionError(error, args.cmd)));
+      });
       childProcess.on("close", (code: number) => {
         if (code === 0) {
           resolve(ok(""));
