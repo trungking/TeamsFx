@@ -2135,9 +2135,12 @@ export class FxCore {
         inputs[QuestionNames.ActionType] === ActionStartOptions.apiSpec().id &&
         !!inputs[QuestionNames.ActionManifestPath]
       ) {
-        inputs[QuestionNames.ApiOperation] = listResult.APIs.filter((value) => value.isValid).map(
-          (value) => value.api
-        );
+        inputs[QuestionNames.ApiOperation] = listResult.APIs.reduce<string[]>((acc, value) => {
+          if (value.isValid) {
+            acc.push(value.api);
+          }
+          return acc;
+        }, []);
       }
       authNameAndSchemes = this.parseAuthNameAndScheme(listResult, inputs);
 
