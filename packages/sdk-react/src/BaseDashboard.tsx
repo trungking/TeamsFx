@@ -78,6 +78,7 @@ export class BaseDashboard<P, S> extends Component<P, S & BaseDashboardState> {
       }
     });
     observer.observe(this.ref.current!);
+    this.setState({ observer } as S & BaseDashboardState);
   }
 
   /**
