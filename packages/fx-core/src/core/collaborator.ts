@@ -132,17 +132,12 @@ export class CollaborationUtil {
     dotEnvFilePath: string
   ): Promise<Result<{ [key: string]: string }, FxError>> {
     try {
-      const result: { [key: string]: string } = {};
       if (!(await fs.pathExists(dotEnvFilePath))) {
         throw new FileNotFoundError("CollaboratorUtil", dotEnvFilePath);
       }
 
       const envs = dotenv.parse(await fs.readFile(dotEnvFilePath));
-      const entries = Object.entries(envs);
-      for (const [key, value] of entries) {
-        result[key] = value;
-      }
-      return ok(result);
+      return ok(envs);
     } catch (error: any) {
       return err(
         new UserError(
