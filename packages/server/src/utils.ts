@@ -122,12 +122,8 @@ export const deepCopy = <T>(target: T): T => {
   if (target instanceof Date) {
     return new Date(target.getTime()) as any;
   }
-  if (target instanceof Array) {
-    const cp = [] as any[];
-    (target as any[]).forEach((v) => {
-      cp.push(v);
-    });
-    return cp.map((n: any) => deepCopy<any>(n)) as any;
+  if (Array.isArray(target)) {
+    return (target as any[]).map((n: any) => deepCopy<any>(n)) as any;
   }
   if (typeof target === "object" && Object.keys(target).length > 0) {
     const cp = { ...(target as { [key: string]: any }) } as {
