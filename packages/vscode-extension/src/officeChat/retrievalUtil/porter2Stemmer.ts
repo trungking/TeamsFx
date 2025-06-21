@@ -192,10 +192,7 @@ export function stemmer(value: string): string {
       if (value.endsWith("at") || value.endsWith("bl") || value.endsWith("iz")) {
         value += "e";
       } else if (doubleRegex.test(value)) {
-        const nonAeo = /[^aeo]/;
-        if (nonAeo.test(value.slice(0, -2))) {
-          value = value.slice(0, -1);
-        }
+        value = value.slice(0, -1);
       } else if (isShort(value)) {
         value += "e";
       }
