@@ -309,8 +309,9 @@ function extractCharFeatures(token: string) {
 
 // Helper function to check if a token contains common secret-related keywords
 function containsSecretKeywords(token: string): number {
-  if (CredKeywordsEndsWith.some((keyword) => token.toLowerCase().endsWith(keyword))) return 1;
-  if (CredKeywordsEquals.some((keyword) => token.toLowerCase() === keyword)) return 1;
+  const lower = token.toLowerCase();
+  if (CredKeywordsEndsWith.some((keyword) => lower.endsWith(keyword))) return 1;
+  if (CredKeywordsEquals.some((keyword) => lower === keyword)) return 1;
   return 0;
 }
 
