@@ -48,20 +48,29 @@ export function buildDynamicPromptInternal(
   });
 }
 
+const expressionCache: Map<string, string[]> = new Map();
+
+function getPathSegments(expression: string): string[] {
+  let cached = expressionCache.get(expression);
+  if (!cached) {
+    cached = expression.split(".");
+    expressionCache.set(expression, cached);
+  }
+  return cached;
+}
+
 function getDeepValue<T>(expression: string, params: IDynamicPromptParams<unknown>) {
-  // expression should include ony '\w', '_', '$' and '.' in this case.
+  // expression should include only '\w', '_', '$' and '.' in this case.
   if (/[^\w_\$.]/.test(expression)) {
     throw new Error(`Expression "${expression}" is not valid.`);
   }
 
-  const parts = expression.split(".");
   let value: unknown = params;
-  for (let i = 0; i < parts.length; i++) {
-    if (!value) {
+  for (const part of getPathSegments(expression)) {
+    if (value === undefined || value === null) {
       return undefined;
     }
-
-    value = (value as Record<string, unknown>)[parts[i]];
+    value = (value as Record<string, unknown>)[part];
   }
 
   return value as T;
