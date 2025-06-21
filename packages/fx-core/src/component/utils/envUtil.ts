@@ -294,6 +294,7 @@ class EnvUtil {
 export const envUtil = new EnvUtil();
 
 const NEW_LINE_SPLITTER = /\r?\n/;
+const DOTENV_LINE_REGEX = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/gm;
 type DotenvParsedLine =
   | string
   | { key: string; value: string; comment?: string; quote?: '"' | "'" };
@@ -308,10 +309,8 @@ class DotenvUtil {
     const obj: DotenvOutput = {};
     const stringLines = src.toString().replace(/\r\n?/gm, "\n").split(NEW_LINE_SPLITTER);
     for (const line of stringLines) {
-      const match =
-        /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/gm.exec(
-          line
-        );
+      DOTENV_LINE_REGEX.lastIndex = 0;
+      const match = DOTENV_LINE_REGEX.exec(line);
       if (match) {
         let inlineComment;
         //key
