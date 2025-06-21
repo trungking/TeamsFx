@@ -75,7 +75,7 @@ export function it(
     if (ctxOrFn instanceof Function) {
       t = mocha.it(title, ctxOrFn);
     } else {
-      t = mocha.it(title, async function (this) {
+      t = mocha.it(title, async function (this: mocha.Context) {
         addContext(this, JSON.stringify(ctxOrFn));
         await (fn as mocha.AsyncFunc).call(this);
       });
