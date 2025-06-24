@@ -182,6 +182,8 @@ export class AzureAccountManager extends login implements AzureAccountProvider {
   }
 
   async switchTenant(tenantId: string): Promise<Result<TokenCredential, FxError>> {
+    AzureAccountManager.tenantId = tenantId;
+    AzureAccountManager.teamsFxTokenCredential.setTenantId(tenantId);
     await saveTenantId(accountName, tenantId);
     return Promise.resolve(ok(AzureAccountManager.teamsFxTokenCredential));
   }
