@@ -183,6 +183,65 @@ describe("Utils Tests", function () {
       const templates = await getTemplates();
       expect(templates.length).equals(1);
     });
+
+    it("filters samples have min and max cli version", async () => {
+      sandbox.stub(core.sampleProvider, "SampleCollection").value(
+        Promise.resolve({
+          filterOptions: {
+            capabilities: ["Tab"],
+            languages: ["TS"],
+            technologies: ["Azure"],
+          },
+          samples: [
+            {
+              id: "test1",
+              onboardDate: "2021-05-06",
+              title: "test1",
+              shortDescription: "test1",
+              fullDescription: "test1",
+              types: ["Tab"],
+              tags: [],
+              time: "1hr to run",
+              configuration: "",
+              thumbnailPath: "",
+              suggested: false,
+              minimumCliVersion: "1.0.0",
+              maximumCliVersion: "3.0.0",
+              downloadUrlInfo: {
+                owner: "",
+                repository: "",
+                ref: "",
+                dir: "",
+              },
+            },
+            {
+              id: "test2",
+              onboardDate: "2021-05-06",
+              title: "test2",
+              shortDescription: "test2",
+              fullDescription: "test2",
+              types: ["Tab"],
+              tags: [],
+              time: "1hr to run",
+              configuration: "",
+              thumbnailPath: "",
+              suggested: false,
+              minimumCliVersion: "1.0.0",
+              maximumCliVersion: "1.5.0",
+              downloadUrlInfo: {
+                owner: "",
+                repository: "",
+                ref: "",
+                dir: "",
+              },
+            },
+          ],
+        })
+      );
+      const templates = await getTemplates();
+      expect(templates.length).equals(1);
+      expect(templates[0].name).equals("test1");
+    });
   });
 });
 
