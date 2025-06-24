@@ -527,12 +527,7 @@ export class ManifestUpdater {
 
   static removeEnvs(str: string): string {
     const placeHolderReg = /\${{\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*}}/g;
-    const matches = placeHolderReg.exec(str);
-    let newStr = str;
-    if (matches != null) {
-      newStr = newStr.replace(matches[0], "");
-    }
-    return newStr;
+    return str.replace(placeHolderReg, "");
   }
 
   static removeAllSpecialCharacters(str: string): string {
