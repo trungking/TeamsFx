@@ -80,11 +80,17 @@ export async function getTemplates(): Promise<Sample[]> {
   const version = getVersion();
   const availableSamples = (await sampleProvider.SampleCollection).samples.filter(
     (sample: SampleConfig) => {
-      if (sample.minimumCliVersion !== undefined) {
-        return semver.gte(version, sample.minimumCliVersion);
+      if (
+        sample.minimumCliVersion !== undefined &&
+        semver.lt(version, sample.minimumCliVersion)
+      ) {
+        return false;
       }
-      if (sample.maximumCliVersion !== undefined) {
-        return semver.lte(version, sample.maximumCliVersion);
+      if (
+        sample.maximumCliVersion !== undefined &&
+        semver.gt(version, sample.maximumCliVersion)
+      ) {
+        return false;
       }
       return true;
     }
