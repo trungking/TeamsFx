@@ -126,6 +126,20 @@ export class AzureAccountManager extends login implements AzureAccountProvider {
   }
 
   switchTenant(tenantId: string): Promise<Result<TokenCredential, FxError>> {
+    AzureAccountManager.tenantId = tenantId;
+    if (fs.pathExistsSync(AzureAccountManager.secret)) {
+      AzureAccountManager.tokenCredential = new identity.ClientCertificateCredential(
+        tenantId,
+        AzureAccountManager.clientId,
+        AzureAccountManager.secret
+      );
+    } else {
+      AzureAccountManager.tokenCredential = new identity.ClientSecretCredential(
+        tenantId,
+        AzureAccountManager.clientId,
+        AzureAccountManager.secret
+      );
+    }
     return Promise.resolve(ok(AzureAccountManager.tokenCredential));
   }
 
