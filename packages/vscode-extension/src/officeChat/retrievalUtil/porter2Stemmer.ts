@@ -110,14 +110,12 @@ function getR2(word: string): RegExpMatchArray | null {
 }
 
 function isShort(word: string): boolean {
-  const regShortSyllable1 = /[^aeiouy][aeiouy][^aeiouywxY]/;
-  const regShortSyllable2 = /^[aeiouy][^aeiouy]/;
-  return (
-    regShortSyllable1.test(word) ||
-    regShortSyllable2.test(word) ||
-    getR1(word) === null ||
-    (getR1(word) as RegExpMatchArray)[1].length === 0
-  );
+  const regShortSyllable1 = /[^aeiouy][aeiouy][^aeiouywxY]$/;
+  const regShortSyllable2 = /^[aeiouy][^aeiouy]$/;
+  const r1 = getR1(word);
+  const endsWithShortSyllable =
+    regShortSyllable1.test(word) || regShortSyllable2.test(word);
+  return (!r1 || r1[1].length === 0) && endsWithShortSyllable;
 }
 
 export function stemmer(value: string): string {
